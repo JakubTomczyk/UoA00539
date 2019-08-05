@@ -154,8 +154,12 @@ for iFile = 1:size(myFolderInfo, 1)
                 tic;
                 MSE = zeros(1, 20);
                 for i = 1:20
-                    [MSE(i), ~, ~] = fcnSE(downsample(tempDataAll(jChan,:), downsampleRate)/i,...
-                         3, 0.2, 1, i);
+                    try
+                        [MSE(i), ~, ~] = fcnSE(downsample(tempDataAll(jChan, :), ...
+                            downsampleRate)/i, 3, 0.2, 1, i);
+                    catch 
+                         warning('Problem using function.  Assigning a value of 0.');
+                    end
                 end
                 time_MSE = time_MSE + toc;	
                 
